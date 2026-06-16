@@ -561,21 +561,13 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
 
   const data = Object.fromEntries(new FormData(e.target));
 
-  const text = `📋 <b>Новая заявка — Суфлёр</b>\n\n` +
-    `👤 <b>Имя:</b> ${data.name}\n` +
-    `🏢 <b>Компания:</b> ${data.company}\n` +
-    `📱 <b>Телефон:</b> ${data.phone}\n` +
-    `✉️ <b>Email:</b> ${data.email}\n` +
-    `👥 <b>Продавцов:</b> ${data.size || 'не указано'}` +
-    (data.message ? `\n💬 <b>Комментарий:</b> ${data.message}` : '');
-
   try {
-    const res = await fetch('https://api.telegram.org/bot8998211335:AAFIUGyq14ksYGh1EABq1edMbvVmi7hYigQ/sendMessage', {
+    const res = await fetch('https://syfler-nss.onrender.com/api/landing/contact', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ chat_id: '7589709368', text, parse_mode: 'HTML' })
+      body: JSON.stringify(data)
     });
-    if (!res.ok) throw new Error('tg error');
+    if (!res.ok) throw new Error('contact error');
     e.target.style.display = 'none';
     document.getElementById('formSuccess').style.display = 'block';
   } catch {
